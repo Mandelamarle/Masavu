@@ -1,0 +1,34 @@
+GIT HUB
+a) Configure username and email on the server Run the following commands to set up your Git
+git config --global user.name "YourUsername"
+git config --global user.email "YourEmail@example.com"
+
+b) Fork a repository
+
+Log in to GitHub.
+Navigate to the repository: https://github.com/ntamosk/students-advent-2023.git.
+Click the Fork button on the top right corner to create your copy of the repository.
+
+c) Clone your forked repository Copy the link to your forked repository and clone it:
+git clone https://github.com/YourUsername/students-advent-2023.git
+
+
+Create a new branch named "exam-bsit"
+
+cd students-advent-2023
+git checkout -b exam-bsit
+
+e) Switch to "exam-bsit" and edit accessnumber.sh Ensure you are on the "exam-bsit"
+git checkout exam-bsit
+
+
+f) Stage and commit changes Replace ACCESS-NUMBER with your real access number:
+git add accessnumber.sh
+git commit -m "Changes made by ACCESS-NUMBER"
+
+g) Push changes to your fork
+git push origin exam-bsit
+
+
+
+

@@ -1,0 +1,42 @@
+a) Bash script to check and create a directory
+Create exam-directory.sh:
+
+#!/bin/bash
+DIR="/home/ubuntu/exam-scripts"
+
+if [ ! -d "$DIR" ]; then
+  echo "Directory $DIR does not exist."
+  read -p "Do you want to create it? (yes/no): " response
+  if [ "$response" == "yes" ]; then
+    mkdir -p "$DIR"
+    echo "Directory $DIR created."
+  else
+    echo "Directory creation denied."
+  fi
+else
+  echo "Directory $DIR already exists."
+fi
+
+Make the script executable:
+chmod +x exam-directory.sh
+
+b) Bash script to check and create a file
+Create exam-file.sh:
+#!/bin/bash
+FILE="/home/ubuntu/exam-scripts/exam-file.sh"
+
+if [ ! -f "$FILE" ]; then
+  echo "File $FILE does not exist."
+  read -p "Do you want to create it? (yes/no): " response
+  if [ "$response" == "yes" ]; then
+    touch "$FILE"
+    echo "File $FILE created."
+  else
+    echo "File creation denied."
+  fi
+else
+  echo "File $FILE already exists."
+fi
+
+Make the script executable:
+chmod +x exam-file.sh
