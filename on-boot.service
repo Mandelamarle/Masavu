@@ -1,0 +1,9 @@
+[Unit]
+Description=Run apt update on boot
+
+[Service]
+Type=simple
+ExecStart=/bin/bash /root/.my-scripts/apt-update.sh
+
+[Install]
+WantedBy=multi-user.target

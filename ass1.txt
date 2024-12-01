@@ -1,0 +1,38 @@
+#!/bin/bash
+
+# Question One: Report Card
+echo "ID  COURSE NAME              LEVEL   ACTUAL PRICE  DISC PRICE"
+echo "---------------------------------------------------------"
+echo "10  Cybersecurity             L100    99.00         12.333"
+echo "11  Advanced Routing          L101    85.20         15.10"
+echo "12  Project Management        L103    1599.00       76.43"
+echo "13  Capstone Project          L104    65.32         103.47"
+echo "14  Data Analytics            L105    55.20         33.70"
+echo "15  Systems Automation        L106    21.70         11.32"
+echo ""
+
+# Question Two: Display Logged-In User Details
+echo "Logged-in User Details"
+echo "-----------------------"
+echo "Username: $USER"
+echo "Home Directory: $HOME"
+echo "Shell: $SHELL"
+echo "Hostname: $(hostname)"
+echo "IP Address: $(hostname -I | awk '{print $1}')"
+echo ""
+
+# Question Three: Determine if Path is a Directory or File
+read -p "Enter a path: " path
+
+if [ -d "$path" ]; then
+  echo "$path is a directory."
+elif [ -f "$path" ]; then
+  echo "$path is a file."
+  if [ ! -s "$path" ]; then
+    echo "The file is empty."
+  else
+    echo "The file size is: $(stat -c %s "$path") bytes."
+  fi
+else
+  echo "$path does not exist."
+fi

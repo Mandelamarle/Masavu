@@ -1,0 +1,54 @@
+Question One: num_loop.sh
+
+#!/bin/bash
+
+for num in {1..20}
+do
+  echo "$num"
+  if [ $((num % 2)) -eq 0 ]; then
+    echo "I'm big!"
+  fi
+done
+
+Question Two
+Part (a): Script with Arguments
+
+#!/bin/bash
+
+echo "Your first name: $1"
+echo "Your last name: $2"
+echo "You're enrolled in: $3"
+echo "You're in year: $4"
+
+To run the script, you would call it with four arguments, like so:
+
+./script_name.sh John Doe Computer_Science 3
+
+Part (b): Script with User Input
+#!/bin/bash
+
+read -p "Enter your first name: " first_name
+read -p "Enter your last name: " last_name
+read -p "Enter your program: " program
+read -p "Enter your year of study: " year_of_study
+
+echo "Your first name: $first_name"
+echo "Your last name: $last_name"
+echo "You're enrolled in: $program"
+echo "You're in year: $year_of_study"
+
+Question Three: Directory and File Check Script
+#!/bin/bash
+
+# Check if directory exists, if not create it
+if [ ! -d "/home/ubuntu/access" ]; then
+  echo "Directory does not exist. Creating it..."
+  mkdir -p /home/ubuntu/access
+fi
+
+# Check if file exists, if not create it
+if [ ! -f "/home/ubuntu/access/myscript.sh" ]; then
+  echo "File does not exist. Creating it..."
+  touch /home/ubuntu/access/myscript.sh
+fi
+

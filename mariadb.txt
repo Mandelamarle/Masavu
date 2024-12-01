@@ -1,0 +1,128 @@
+1. Install MariaDB and Secure Access
+Start by installing and configuring MariaDB on your server.
+
+# Install MariaDB
+sudo apt update
+sudo apt install mariadb-server -y
+
+# Start and enable MariaDB service
+sudo systemctl start mariadb
+sudo systemctl enable mariadb
+
+# Secure MariaDB installation
+sudo mysql_secure_installation
+
+2. Configure MariaDB for Remote Access
+sudo nano /etc/mysql/mariadb.conf.d/50-server.cnf
+Find the line:
+bind-address = 127.0.0.1
+Change it to:
+
+bind-address = 0.0.0.0
+
+Save and close the file, then restart MariaDB:
+sudo systemctl restart mariadb
+
+3. Create Database and Table
+# Login to MariaDB
+sudo mariadb -u root -p
+
+# Inside the MariaDB shell
+CREATE DATABASE your_last_name;
+USE your_last_name;
+
+# Create a table
+CREATE TABLE example_table (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    age INT NOT NULL
+);
+
+# Insert data
+INSERT INTO example_table (name, age) VALUES
+    ('Alice', 25),
+    ('Bob', 30),
+    ('Charlie', 35),
+    ('Diana', 28),
+    ('Eve', 22);
+
+# Exit MariaDB
+exit;
+
+4. Create Backup Script
+Write a script that checks for the existence of /opt/db-backups, creates it if it doesn’t exist, and backs up the database there.
+
+Create the file /usr/local/bin/backup_mariadb.sh:
+
+sudo nano /usr/local/bin/backup_mariadb.sh
+
+Add the following content to the script:
+#!/bin/bash
+
+# Directory where backups will be stored
+BACKUP_DIR="/opt/db-backups"
+
+# Check if directory exists, if not, create it
+if [ ! -d "$BACKUP_DIR" ]; then
+    sudo mkdir -p "$BACKUP_DIR"
+fi
+
+# Backup the database
+DB_NAME="your_last_name"
+BACKUP_FILE="$BACKUP_DIR/${DB_NAME}_backup_$(date +%F_%H-%M).sql"
+
+# Dump the database
+mysqldump -u root -pYOUR_PASSWORD "$DB_NAME" > "$BACKUP_FILE"
+
+echo "Backup for database '$DB_NAME' completed at $BACKUP_FILE"
+Note: Replace YOUR_PASSWORD with the MariaDB root password. Save and close the file.
+
+Make the script executable:
+sudo chmod +x /usr/local/bin/backup_mariadb.sh
+
+5. Schedule with crontab
+Edit the crontab file to schedule the script to run every four hours.
+
+sudo crontab -e
+Add the following line:
+
+cron
+Copy code
+0 */4 * * * /usr/local/bin/backup_mariadb.sh
+This will execute the backup script every four hours.
+
+6. Schedule with systemd Timer
+sudo nano /etc/systemd/system/backups.service
+Add the following content:
+
+[Unit]
+Description=Database Backup Service
+
+[Service]
+ExecStart=/usr/local/bin/backup_mariadb.sh
+
+Create the Systemd Timer: This timer triggers the service every four hours.
+
+sudo nano /etc/systemd/system/backups.timer
+Add the following content:
+
+[Unit]
+Description=Run Database Backup Every Four Hours
+
+[Timer]
+OnCalendar=*-*-* *:00/4:00
+Persistent=true
+
+[Install]
+WantedBy=timers.target
+
+Enable and Start the Timer:
+
+sudo systemctl daemon-reload
+sudo systemctl enable backups.timer
+sudo systemctl start backups.timer
+
+Verify the Timer:
+
+Check if the timer is active:
+sudo systemctl list-timers --all

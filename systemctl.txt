@@ -1,0 +1,54 @@
+Step 1: Create a Hidden Folder my-scripts under /root and Set Ownership to Root
+# Create a hidden folder under /root called 'my-scripts'
+mkdir /root/.my-scripts
+
+# Change ownership to root (this step may already be done by default)
+chown root:root /root/.my-scripts
+
+Step 2: Create a Bash Script apt-update.sh
+#!/bin/bash
+
+# Check if the current user is root
+if [ "$(whoami)" != "root" ]; then
+  echo "You must run this script as root."
+  exit 1
+fi
+
+# Run apt update and redirect errors to /dev/null
+apt update 2>/dev/null
+
+Step 3: Create a Systemd Service File on-boot.service
+# Create the systemd service file
+touch /etc/systemd/system/on-boot.service
+
+# Open the file in a text editor
+nano /etc/systemd/system/on-boot.service
+
+Add the following content to the on-boot.service file:
+[Unit]
+Description=Run apt update on boot
+After=network.target
+
+[Service]
+ExecStart=/bin/bash /root/.my-scripts/apt-update.sh
+Type=simple
+User=root
+
+[Install]
+WantedBy=multi-user.target
+
+
+Step 4: Reload systemd and Enable the Service
+# Reload systemd to read the new service file
+systemctl daemon-reload
+
+# Enable the service to start on boot
+systemctl enable on-boot.service
+
+# Start the service immediately (optional)
+systemctl start on-boot.service
+
+
+Step 5: Verify the Service
+# Check the status of the systemd service
+systemctl status on-boot.service
