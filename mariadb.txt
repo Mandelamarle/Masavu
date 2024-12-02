@@ -101,10 +101,10 @@ Description=Database Backup Service
 [Service]
 ExecStart=/usr/local/bin/backup_mariadb.sh
 
-Create the Systemd Timer: This timer triggers the service every four hours.
+#Create the Systemd Timer: This timer triggers the service every four hours.
 
 sudo nano /etc/systemd/system/backups.timer
-Add the following content:
+#Add the following content:
 
 [Unit]
 Description=Run Database Backup Every Four Hours
@@ -116,13 +116,13 @@ Persistent=true
 [Install]
 WantedBy=timers.target
 
-Enable and Start the Timer:
+#Enable and Start the Timer:
 
 sudo systemctl daemon-reload
 sudo systemctl enable backups.timer
 sudo systemctl start backups.timer
 
-Verify the Timer:
+#Verify the Timer:
 
-Check if the timer is active:
+#Check if the timer is active:
 sudo systemctl list-timers --all
