@@ -1,0 +1,58 @@
+Linux commands
+
+passwd => change password
+exit => to logout
+lsblk => lists partitions
+man [command] => to know name of the command, section, manual etc
+ full word => --noempty
+  abbre => -A
+df -h => checking file system
+ls => list directory contents
+touch [file_name] => creating a file
+sudo => execute command as another user
+sudo dpkg-reconfigure tzdata => change date time zone
+date => shows the date
+file represented by => (-)
+file owmership/parts [user, group, others]
+[rwx] => [421]
+chmod [u,g,o=rwx] [file_name, directory]=> change permissions of the file/ file mode bits
+chmod [ug0=(r,w,x)] => giving partitions same permissions 
+pwd => checking the path
+vim [file_name] => to open file
+esc == shift : == wq => to save 
+sudo -i => to become root
+mv [file_name] [new directory_path] => moving file to new location
+cp [file_name] [new directory_path] => copy file
+rm -rf [name]* => removing all files or directories starting with the same name
+rmdir [directory_name] or rm -r [directory_name] => remove directory
+touch [file_name{1..9}.txt] => creating more than one file
+rm *.txt => removing all .txt files
+which env => checking for env file location
+./[file_name] or bash [file_name] => executing the file
+chmod u+x scriptfilename.sh => tell unix the script file is executable
+sh -x ./[filename] => debugging
+
+scp ubuntu@196.43.142.7:/home/ubuntu/Assignmentone.sh  "C:\Users\HP\Desktop\assignmentone"=> downloading script sh files
+htop => shows whats going on behind the scenes
+sudo apt install apache2 => installing apache2
+
+USING SYSTEMD
+systemctl status apache2 => checking apache status
+sudo systemctl start apache2 => to start apache
+q => to break out of status window
+mkdir /root/.[folder_name] => creating a hidden directory
+chown user:group directory => changing ownership of folder
+
+# Reload systemd to recognize the new service
+systemctl daemon-reload
+
+# Enable the service to run on boot
+systemctl enable on-boot.service
+
+# Optionally, start the service immediately
+systemctl start on-boot.service
+
+AUTOMATION
+crontab -e => creating cronjob => choose 3 
+echo "antiy" >> [directory path] => moving commands to another file
+sh [directory] => automating the shell script after
